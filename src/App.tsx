@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
-import "./App.css";
 import { useViewerConnection, useViewerRecord } from "@self.id/react";
 import { EthereumAuthProvider } from "@self.id/web";
+import styled from "styled-components";
 
 // components
 import Nav from "components/Nav";
 import { ButtonBase } from "components/UI-Elements";
 
+const AppWrapper = styled.div`
+  width: 20rem;
+  border: 1px solid red;
+  border-radius: 1.5rem;
+`;
+
 const App = () => {
-  const [connection, connect, disconnect] = useViewerConnection();
+  const [connection, connect] = useViewerConnection();
   const record = useViewerRecord("basicProfile");
   const { provider, account } = useWeb3React();
   const [name, setName] = useState("");
@@ -39,7 +45,7 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <AppWrapper>
       <Nav />
       <ButtonBase
         onClick={connectToSelfId}
@@ -72,11 +78,14 @@ const App = () => {
           placeholder="name"
           onChange={(e) => setName(e.target.value)}
         />
-        <ButtonBase onClick={() => updateRecordName(name)}>
+        <ButtonBase
+          onClick={() => updateRecordName(name)}
+          disabled={connection.status !== "connected"}
+        >
           Update 3ID Name
         </ButtonBase>
       </div>
-    </div>
+    </AppWrapper>
   );
 };
 
