@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import "./App.css";
-import { useViewerConnection } from "@self.id/react";
+import { useViewerConnection, useViewerRecord } from "@self.id/react";
 import { EthereumAuthProvider } from "@self.id/web";
 
 // components
@@ -10,7 +10,9 @@ import { ButtonBase } from "components/UI-Elements";
 
 const App = () => {
   const [connection, connect, disconnect] = useViewerConnection();
+  const record = useViewerRecord("basicProfile");
   const { provider, account } = useWeb3React();
+  const [name, setName] = useState("");
 
   const getEthereumAuthProvider = async (): Promise<
     EthereumAuthProvider | undefined
@@ -32,6 +34,10 @@ const App = () => {
     }
   };
 
+  const updateRecordName = async (name: string): Promise<void> => {
+    await record.merge?.({ name });
+  };
+
   return (
     <div className="App">
       <Nav />
@@ -44,6 +50,32 @@ const App = () => {
       {connection.status === "connected" ? (
         <p>Your 3ID is {connection.selfID.id}</p>
       ) : null}
+
+      <div>
+        {record.content ? (
+          <>
+            <p>Hello {record.content?.name}</p>
+            <p>
+              The above name was loaded from the Ceramic Network. Try updating
+              it below :)
+            </p>
+          </>
+        ) : (
+          <p>
+            You do not have a profile attached to your 3ID. Create a basic
+            profile by setting a name below
+          </p>
+        )}
+        <input
+          type="text"
+          value={name}
+          placeholder="name"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <ButtonBase onClick={() => updateRecordName(name)}>
+          Update 3ID Name
+        </ButtonBase>
+      </div>
     </div>
   );
 };
