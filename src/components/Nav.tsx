@@ -11,8 +11,8 @@ import { shortenAddress } from "utils";
 
 const NavContainer = styled.nav`
   border-bottom: 2px solid white;
-  padding: 1rem 0.5rem;
   margin-bottom: 1rem;
+  padding: 1rem 0;
 `;
 
 const StatusWrapper = styled.div`

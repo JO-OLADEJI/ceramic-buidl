@@ -5,9 +5,9 @@ export const ButtonBase = styled.button<{ disabled?: boolean }>`
   cursor: pointer;
   padding: 1rem 1.5rem;
   font-family: "Fredoka", sans-serif;
-  border-bottom: 6px solid #fe0100;
-  border-left: 2px solid #fe0100;
-  border-right: 2px solid #fe0100;
+  border-bottom: 6px solid #FFA45F;
+  border-left: 2px solid #FFA45F;
+  border-right: 2px solid #FFA45F;
   border-radius: 1rem;
   font-size: 1.2rem;
   font-weight: 600;
